@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/coffee_beans_on_table720"
+    tools:context=".SettingsActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/BackgroundColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/settings"
+            android:textColor="@color/TextColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/back_button"
+            android:onClick="onBackClicked"
+            android:src="@drawable/back_button_brown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/body"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/BackgroundColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <RadioGroup
+            android:id="@+id/waterRadioGroup"
+            android:layout_width="194dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <RadioButton
+                android:id="@+id/dl"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+
+                android:onClick="onRadioButtonDlSelected"
+                android:text="@string/dl"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@color/TextColor"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/cl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onRadioButtonClSelected"
+                android:text="@string/cl"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/gramsWater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onRadioButtonGramsWaterSelected"
+                android:text="@string/grams"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/oz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onRadioButtonOzSelected"
+                android:text="@string/fl_oz"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/cup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onRadioButtonCupSelected"
+                android:text="@string/us_cup"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/unit_for_coffee"
+            android:textColor="@color/TextColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waterRadioGroup" />
+
+        <RadioGroup
+            android:id="@+id/coffeRadioGroup"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <RadioButton
+                android:id="@+id/grams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+
+                android:onClick="onRadioButtonGramsSelected"
+                android:text="@string/grams"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/TbspRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onRadioButtonTbspSelected"
+                android:text="@string/tbsp"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/ozRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+
+                android:onClick="onCoffeeRadioButtonOzSelected"
+                android:text="@string/oz"
+                android:textColor="@color/TextColor"
+                android:textColorLink="@android:color/background_dark"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/unit_for_water"
+            android:textColor="@color/TextColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
