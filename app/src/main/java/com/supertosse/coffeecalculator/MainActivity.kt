@@ -12,7 +12,7 @@ import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.DecimalFormat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
     private var isCoffeeToWater: Boolean = false
     private var waterUnit: String? = null
@@ -20,21 +20,24 @@ class MainActivity : AppCompatActivity() {
     private var coffeeUnit: String? = null
     private var coffeeUnitMultiplier: Float = 0.toFloat()
 
-    private val MyPrefrences = "com.supertosse.coffeecalculator.preferences"
+    private val myPreferences = "com.supertosse.coffeecalculator.preferences"
     private var sharedPref: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sharedPref = this.getSharedPreferences(this.MyPrefrences, 0)
+        sharedPref = this.getSharedPreferences(this.myPreferences, 0)
         setupSeekBar(this)
         setupInput(this)
         loadValues()
         resultBox.visibility = View.INVISIBLE
     }
+    override fun onResume() {
+        super.onResume()
+        loadValues()
+    }
 
-    //Load all the values that can be saved to shared preferences and update this.attributes
     private fun loadValues() {
         this.waterUnit = sharedPref!!.getString("waterUnit", getString(R.string.dl))
         this.coffeeUnit = sharedPref!!.getString("coffeeUnit", "grams")
@@ -59,7 +62,29 @@ class MainActivity : AppCompatActivity() {
             "oz" -> this.coffeeUnitMultiplier = 28.3f
         }
     }
-    //When radio buttons are clicked
+    private fun setupSeekBar(m: MainActivity) {
+        ratioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                m.updateOutput()
+                updateSeekaBarText(i)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
+        val sharedPref = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val seekBarValue = sharedPref.getInt("ratio", 18) - 10
+        ratioSeekBar.progress = seekBarValue
+    }
+    private fun setupInput(m: MainActivity) {
+        amountInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                m.updateOutput()
+            }
+            override fun afterTextChanged(editable: Editable) {}
+        })
+    }
     fun setCoffeeToWater(view: View) {
         this.isCoffeeToWater = true
         unitTextView.text = this.coffeeUnit
@@ -84,7 +109,6 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("isCoffeeToWater", false)
         editor.apply()
     }
-    //When any input is updated
     fun updateOutput(){
         val inputString = amountInput.text.toString()
         //To avoid app stopping if invalid input
@@ -124,7 +148,6 @@ class MainActivity : AppCompatActivity() {
         resultTextView.text = outputString1
         resultTextView2.text = outputString2
     }
-    //Update seekBar ratio text with number and hint
     fun updateSeekaBarText(i: Int) {
         var seekBarText = "Ratio: 1/" + (i + 10)
 
@@ -139,35 +162,10 @@ class MainActivity : AppCompatActivity() {
         editor.putInt("ratio", i + 10)
         editor.apply()
     }
-    //Set up onChangeListener so output gets updated when ratio seekBar is changed
-    private fun setupSeekBar(m: MainActivity) {
-        ratioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                m.updateOutput()
-                updateSeekaBarText(i)
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
-
-        val sharedPref = getSharedPreferences(MyPrefrences, Context.MODE_PRIVATE)
-        val seekBarValue = sharedPref.getInt("ratio", 18) - 10
-        ratioSeekBar.progress = seekBarValue
-    }
-    //Set up onChangeListener so output gets updated when input is changed
-    private fun setupInput(m: MainActivity) {
-        amountInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                m.updateOutput()
-            }
-            override fun afterTextChanged(editable: Editable) {}
-        })
-    }
-    //Open preferences view
     fun openPreferences(view: View) {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
+
 }
